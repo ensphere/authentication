@@ -1,0 +1,7 @@
+/vendor
+/node_modules
+/bower_components
+/config/packages.json
+config/packages.json
+composer.lock
+.env

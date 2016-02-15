@@ -1,0 +1,32 @@
+{
+	"middleware" : [
+		"\\Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode"
+	],
+	"routeMiddleware" : {
+		"auth" : "\\Ensphere\\Authentication\\Http\\Middleware\\Authenticate",
+        "auth.basic" : "\\Illuminate\\Auth\\Middleware\\AuthenticateWithBasicAuth",
+        "guest" : "\\Ensphere\\Authentication\\Http\\Middleware\\RedirectIfAuthenticated",
+        "throttle" : "\\Illuminate\\Routing\\Middleware\\ThrottleRequests"
+	},
+	"middlewareGroups" : {
+		"web" : [
+			"\\Ensphere\\Authentication\\Http\\Middleware\\EncryptCookies",
+            "\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse",
+            "\\Illuminate\\Session\\Middleware\\StartSession",
+            "\\Illuminate\\View\\Middleware\\ShareErrorsFromSession",
+            "\\Ensphere\\Authentication\\Http\\Middleware\\VerifyCsrfToken"
+		],
+		"api" : [
+			"throttle:60,1"
+		]
+	},
+	"providers" : [
+		"Ensphere\\Authentication\\Providers\\AppServiceProvider",
+		"Ensphere\\Authentication\\Providers\\ConfigServiceProvider",
+		"Ensphere\\Authentication\\Providers\\EventServiceProvider",
+		"Ensphere\\Authentication\\Providers\\RouteServiceProvider"
+	],
+	"aliases" : {
+
+	}
+}
