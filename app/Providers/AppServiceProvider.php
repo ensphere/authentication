@@ -25,8 +25,7 @@ class AppServiceProvider extends ServiceProvider {
 		if( self::isModule() ) {
 			$this->publishes([
 				__DIR__ . '/../../public/package/ensphere/authentication/' => base_path( 'public/package/ensphere/authentication/' ),
-				__DIR__ . '/../../config/auth.php' => config_path( 'auth.php' ),
-				__DIR__ . '/../../database/migrations/' => database_path('migrations')
+				__DIR__ . '/../../config/auth.php' => config_path( 'auth.php' )
 			]);
 		}
 	}
