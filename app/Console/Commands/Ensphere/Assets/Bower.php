@@ -1,4 +1,4 @@
-<?php namespace Ensphere\Authentication\Console\Commands\GenerateAssets;
+<?php namespace Ensphere\Authentication\Console\Commands\Ensphere\Assets;
 
 class Bower {
 
