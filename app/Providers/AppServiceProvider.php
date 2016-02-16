@@ -21,10 +21,10 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->loadViewsFrom( __DIR__ . '/../../resources/views', 'ensphere.ensphere' );
+		$this->loadViewsFrom( __DIR__ . '/../../resources/views', 'ensphere.auth' );
 		if( self::isModule() ) {
 			$this->publishes([
-				__DIR__ . '/../../public/package/ensphere/ensphere/' => base_path( 'public/package/ensphere/ensphere/' ),
+				__DIR__ . '/../../public/package/ensphere/auth/' => base_path( 'public/package/ensphere/auth/' ),
 			]);
 		}
 	}

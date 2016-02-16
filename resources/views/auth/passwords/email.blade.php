@@ -1,7 +1,4 @@
-@extends('layouts.app')
 
-<!-- Main Content -->
-@section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -14,7 +11,7 @@
                         </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('post.sendEmail') }}">
                         {!! csrf_field() !!}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
@@ -34,7 +31,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-envelope"></i>Send Password Reset Link
+                                    <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
                                 </button>
                             </div>
                         </div>
@@ -44,4 +41,3 @@
         </div>
     </div>
 </div>
-@endsection

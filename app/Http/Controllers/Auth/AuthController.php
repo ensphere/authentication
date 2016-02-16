@@ -1,14 +1,13 @@
-<?php
-
-namespace Ensphere\Authentication\Http\Controllers\Auth;
+<?php namespace Ensphere\Authentication\Http\Controllers\Auth;
 
 use Ensphere\Authentication\Models\User;
+use Ensphere\Authentication\Http\Controllers\BaseController;
 use Validator;
 use Ensphere\Authentication\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-class AuthController extends Controller
+class AuthController extends BaseController
 {
     /*
     |--------------------------------------------------------------------------
@@ -24,20 +23,43 @@ class AuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
-     * Where to redirect users after login / registration.
-     *
-     * @var string
+     * [$redirectTo description]
+     * @var [type]
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo;
 
     /**
-     * Create a new authentication controller instance.
-     *
-     * @return void
+     * [$redirectAfterLogout description]
+     * @var [type]
+     */
+    protected $redirectAfterLogout;
+
+    /**
+     * [__construct description]
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->redirectTo = route('get.dashboard');
+        $this->redirectAfterLogout = route('get.login');
+        $this->middleware( 'guest', ['except' => 'logout' ]);
+    }
+
+    /**
+     * [getLogin description]
+     * @return [type] [description]
+     */
+    public function showLoginForm()
+    {
+        $this->layout->content = view('ensphere.auth::auth.login');
+    }
+
+    /**
+     * [getRegister description]
+     * @return [type] [description]
+     */
+    public function getRegister()
+    {
+        $this->layout->content = view('ensphere.auth::auth.register');
     }
 
     /**
@@ -46,9 +68,9 @@ class AuthController extends Controller
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
-    protected function validator(array $data)
+    protected function validator( array $data )
     {
-        return Validator::make($data, [
+        return Validator::make( $data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
@@ -61,7 +83,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
+    protected function create( array $data )
     {
         return User::create([
             'name' => $data['name'],

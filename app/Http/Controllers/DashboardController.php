@@ -5,7 +5,7 @@ namespace Ensphere\Authentication\Http\Controllers;
 use Ensphere\Authentication\Http\Requests;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class DashboardController extends BaseController
 {
     /**
      * Create a new controller instance.
@@ -24,6 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $this->layout->content = view('ensphere.auth::dashboard.dashboard');
     }
 }
