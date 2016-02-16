@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel {
 		'Ensphere\Authentication\Console\Commands\Registration',
 		'Ensphere\Authentication\Console\Commands\ModuleName',
 		'Ensphere\Authentication\Console\Commands\Export',
+		'Ensphere\Authentication\Console\Commands\Migrate',
 	];
 
 	/**
