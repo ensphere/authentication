@@ -150,9 +150,9 @@ return [
 		 * Application Service Providers, if this is a module, don't register them here, use the registration.json file.
 		 */
 
-		Ensphere\Ensphere\Providers\AppServiceProvider::class,
-        Ensphere\Ensphere\Providers\EventServiceProvider::class,
-        Ensphere\Ensphere\Providers\RouteServiceProvider::class,
+		Ensphere\Authentication\Providers\AppServiceProvider::class,
+        Ensphere\Authentication\Providers\EventServiceProvider::class,
+        Ensphere\Authentication\Providers\RouteServiceProvider::class,
 
 	]),
 
