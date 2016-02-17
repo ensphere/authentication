@@ -35,7 +35,89 @@ class Command extends IlluminateCommand {
 	 */
 	public function fire()
 	{
+		if( ! $this->hasBeenInstalled() ) {
+			$this->installNodeModules();
+			$this->installBowerComponents();
+			$this->generateRegistrationFile();
+			$this->publishVendorAssets();
+			$this->combineVendorAssets();
+			$this->runGulp();
+			$this->defineAsinstalled();
+		} else {
+			$this->error( "application has already ran the install process --canceled" );
+		}
+	}
 
+	/**
+	 * [installNodeModules description]
+	 * @return [type] [description]
+	 */
+	private function installNodeModules()
+	{
+		$this->info( shell_exec( "npm install" ) );
+	}
+
+	/**
+	 * [installBowerComponents description]
+	 * @return [type] [description]
+	 */
+	private function installBowerComponents()
+	{
+		$this->info( shell_exec( "bower install" ) );
+	}
+
+	/**
+	 * [generateRegistrationFile description]
+	 * @return [type] [description]
+	 */
+	private function generateRegistrationFile()
+	{
+		$this->info( shell_exec( "php artisan ensphere:register" ) );
+	}
+
+	/**
+	 * [publishVendorAssets description]
+	 * @return [type] [description]
+	 */
+	private function publishVendorAssets()
+	{
+		$this->info( shell_exec( "php artisan vendor:publish --force" ) );
+	}
+
+	/**
+	 * [combineVendorAssets description]
+	 * @return [type] [description]
+	 */
+	private function combineVendorAssets()
+	{
+		$this->info( shell_exec( "php artisan ensphere:assets" ) );
+	}
+
+	/**
+	 * [runGulp description]
+	 * @return [type] [description]
+	 */
+	private function runGulp()
+	{
+		$this->info( shell_exec( "gulp" ) );
+	}
+
+	/**
+	 * [hasBeenInstalled description]
+	 * @return boolean [description]
+	 */
+	private function hasBeenInstalled()
+	{
+		return file_exists( __DIR__ . '/.installed');
+	}
+
+	/**
+	 * [defineAsinstalled description]
+	 * @return [type] [description]
+	 */
+	private function defineAsinstalled()
+	{
+		touch( __DIR__ . '/.installed' );
 	}
 
 	/**

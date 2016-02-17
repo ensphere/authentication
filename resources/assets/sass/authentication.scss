@@ -1,0 +1,26 @@
+
+.authentication {
+	background: #DADADA;
+	&.login,
+	&.register,
+	&.signedup,
+	&.email {
+		> .grid {
+			height: 100%;
+		}
+		.column {
+		  	max-width: 450px;
+		}
+		.forgotten {
+			margin-top: 20px;
+		}
+		.ui.stacked.segment:after {
+			border-top: none;
+		}
+	}
+	.ui.form .error.message,
+	.ui.form .success.message,
+	.ui.form .warning.message {
+		display: block;
+	}
+}

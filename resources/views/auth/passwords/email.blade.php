@@ -1,43 +1,55 @@
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Reset Password</div>
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Application</title>
+        <meta name="description" content="" />
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+        @include('css-loader')
+        <link rel="stylesheet" href="/css/packages.all.css">
+        @include('js-loader')
+        <script src="/js/packages.all.js"></script>
+    </head>
+    <body class="authentication email">
+        <div class="ui middle aligned center aligned grid">
+            <div class="column">
+                <h2 class="ui teal image header">
+                    <div class="content">
+                        Reset Password
+                    </div>
+                </h2>
+                <form class="ui large form" method="post" action="{{ route('post.sendEmail') }}">
+                    {!! csrf_field() !!}
+                    @if ( ! $errors->isEmpty() )
+                        <div class="ui error small message">
+                            <div class="header">There was some errors with your submission</div>
+                            <ul class="list">
+                                @foreach ( $errors->all() as $error )
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    @if ( session( 'status' ) )
+                        <div class="ui success small message">
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('post.sendEmail') }}">
-                        {!! csrf_field() !!}
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
+                    <div class="ui stacked segment">
+                        <div class="field">
+                            <div class="ui left icon input {{ $errors->has('email') ? 'error' : '' }}">
+                                <i class="user icon"></i>
+                                <input type="text" name="email" value="{{ old('email') }}" placeholder="E-mail address">
                             </div>
                         </div>
+                        <button class="ui fluid large teal submit button">Send Password Reset Link</button>
+                    </div>
+                </form>
 
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-envelope"></i> Send Password Reset Link
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="ui message">
+                    <a href="{{ route('get.login') }}">Login</a> | <a href="{{ route('get.register') }}">Sign Up</a>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    </body>
+</html>

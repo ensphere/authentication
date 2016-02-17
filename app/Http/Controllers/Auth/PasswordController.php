@@ -46,9 +46,7 @@ class PasswordController extends BaseController
      */
     public function showLinkRequestForm()
     {
-        if ( view()->exists( 'ensphere.auth::auth.passwords.email' ) ) {
-            $this->layout->content = view( 'ensphere.auth::auth.passwords.email' );
-        }
+        return view( 'ensphere.auth::auth.passwords.email' );
     }
 
     /**
@@ -60,14 +58,13 @@ class PasswordController extends BaseController
     public function showResetForm( Request $request, $token = null )
     {
         if ( is_null( $token ) ) {
-            $this->getEmail();
+            return $this->getEmail();
         } else {
             $email = $request->input( 'email' );
-            if ( view()->exists( 'ensphere.auth::auth.passwords.reset' ) ) {
-                $this->layout->content = view( 'ensphere.auth::auth.passwords.reset' );
-                $this->layout->content->token = $token;
-                $this->layout->content->email = $email;
-            }
+            return view( 'ensphere.auth::auth.passwords.reset', array(
+                'token' => $token,
+                'email' => $email
+            ));
         }
     }
 

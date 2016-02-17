@@ -13,9 +13,14 @@ $this->get('/', function(){
 
 $this->group([ 'middleware' => 'web', 'prefix' => 'admin' ], function () {
 
+	$this->get( '/', function(){
+		return redirect( route( 'get.dashboard' ) );
+	});
+
     $this->get('login', 					[ 'as' => 'get.login', 'uses' => 'Auth\AuthController@showLoginForm' ]);
 	$this->post('login',					[ 'as' => 'post.login', 'uses' => 'Auth\AuthController@login' ]);
 	$this->get('logout', 					[ 'as' => 'get.logout', 'uses' => 'Auth\AuthController@logout' ]);
+	$this->get('signedup', 					[ 'as' => 'get.signedup', 'uses' => 'Auth\AuthController@signedUp' ]);
 
 	$this->get('register', 					[ 'as' => 'get.register', 'uses' => 'Auth\AuthController@getRegister'] );
 	$this->post('register', 				[ 'as' => 'post.register', 'uses' => 'Auth\AuthController@register' ]);
