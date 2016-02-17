@@ -5,7 +5,7 @@
 		<title>Ensphere</title>
 		<link rel="shortcut icon" href="/favicon.png">
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
-		@include('ensphere.auth::css-loader')
+		@include('loader')
 		<style>
 		html {
 			height: 100%;
@@ -99,6 +99,5 @@
 			<h1>Ensphere</h1>
 			<p>An alternative to the Laravel base application</p>
 		</div>
-		@include('ensphere.auth::js-loader')
 	</body>
 </html>
