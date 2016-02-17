@@ -35,20 +35,20 @@ class Command extends IlluminateCommand {
 	 */
 	public function fire()
 	{
-		$this->updateBowerComponents();
 		$this->generateRegistrationFile();
+		$this->migrateRun();
 		$this->publishVendorAssets();
 		$this->combineVendorAssets();
 		$this->runGulp();
 	}
 
 	/**
-	 * [installBowerComponents description]
+	 * [migrateRun description]
 	 * @return [type] [description]
 	 */
-	private function updateBowerComponents()
+	private function migrateRun()
 	{
-		$this->info( shell_exec( "bower update" ) );
+		$this->info( shell_exec( "php artisan ensphere:migrate run" ) );
 	}
 
 	/**
