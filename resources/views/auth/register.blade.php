@@ -8,7 +8,7 @@
         @include('loader')
     </head>
     <body class="authentication register">
-        <div id="screen-loader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: white; z-index: 9999;"></div>
+        <div id="screen-loader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #DADADA; z-index: 9999;"></div>
         <div class="ui middle aligned center aligned grid">
             <div class="column left aligned">
                 <div class="ui aligned center aligned grid">
