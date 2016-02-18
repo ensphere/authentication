@@ -23,11 +23,11 @@ class AppServiceProvider extends ServiceProvider {
 	{
 		$this->loadViewsFrom( __DIR__ . '/../../resources/views', 'ensphere.auth' );
 		if( self::isModule() ) {
-			$this->publishes([
+			$this->publishes( \Libs\Config\Publish::bower([
 				__DIR__ . '/../../public/package/ensphere/authentication/' => base_path( 'public/package/ensphere/authentication/' ),
 				__DIR__ . '/../../config/auth.php' => config_path( 'auth.php' ),
 				__DIR__ . '/../../resources/database/migrations/' => database_path( 'migrations/vendor/ensphere/authentication/' )
-			]);
+			]), __DIR__ );
 		}
 	}
 
