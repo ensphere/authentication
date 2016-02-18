@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider {
 				__DIR__ . '/../../public/package/ensphere/authentication/' => base_path( 'public/package/ensphere/authentication/' ),
 				__DIR__ . '/../../config/auth.php' => config_path( 'auth.php' ),
 				__DIR__ . '/../../resources/database/migrations/' => database_path( 'migrations/vendor/ensphere/authentication/' )
-			]), __DIR__ );
+			], __DIR__ ));
 		}
 	}
 
