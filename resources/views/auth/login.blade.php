@@ -11,9 +11,11 @@
 		<div id="screen-loader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #DADADA; z-index: 9999;"></div>
 		<div class="ui middle aligned center aligned grid">
 			<div class="column">
-				<h2 class="ui small horizontal divider">
-					<div><i class="lock icon"></i> Log-in to your account</div>
-				</h2>
+				<h2 class="ui teal header">
+                    <div class="content">
+                        <div class="ui horizontal divider"><i class="lock icon"></i> Log-in to your account</div>
+                    </div>
+                </h2>
 				<form class="ui small form" method="post" action="{{ route('post.login') }}">
 					{!! csrf_field() !!}
 					@if ( ! $errors->isEmpty() )
