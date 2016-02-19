@@ -13,6 +13,7 @@ class Kernel extends ConsoleKernel {
 	protected $commands = [
 
 		'Ensphere\Authentication\Console\Commands\Ensphere\Rename\Command',
+		'Ensphere\Authentication\Console\Commands\Ensphere\Import\Command',
 		'Ensphere\Authentication\Console\Commands\Ensphere\Export\Command',
 		'Ensphere\Authentication\Console\Commands\Ensphere\Bower\Command',
 		'Ensphere\Authentication\Console\Commands\Ensphere\Migrate\Command',
