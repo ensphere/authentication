@@ -36,12 +36,14 @@ class AppServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$contracts = \Libs\Providers\Service::contracts([
-			// THESE ARE APPLICATION CONTRACTS.
+		if( ! self::isModule() ) {
+			$contracts = \Libs\Providers\Service::contracts([
+				// THESE ARE APPLICATION CONTRACTS.
 
-		]);
-		foreach( $contracts as $blueprint => $contract ) {
-			$this->app->bind( $blueprint, $contract );
+			]);
+			foreach( $contracts as $blueprint => $contract ) {
+				$this->app->bind( $blueprint, $contract );
+			}
 		}
 	}
 }
