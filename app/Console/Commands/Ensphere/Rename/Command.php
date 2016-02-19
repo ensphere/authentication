@@ -96,17 +96,31 @@ class Command extends IlluminateCommand {
 		$this->camelCasedVendor = ucfirst( camel_case( $this->vendor ) );
 		$this->module = $this->ask('Whats your Module name?');
 		$this->camelCasedModule = ucfirst( camel_case( $this->module ) );
-		$this->laravelRename();
-		$this->moduleRename();
-		$this->dumpAutoload();
-		$this->info("done!");
+		if( $this->isOkToRun() ) {
+			$this->laravelRename();
+			$this->moduleRename();
+			$this->dumpAutoload();
+			$this->info("done!");
+		} else {
+			$this->error( 'Cannot rename module, vendor/module alread exists in application!' );
+		}
+	}
+
+	/**
+	 * [isOkToRun description]
+	 * @return boolean [description]
+	 */
+	private function isOkToRun()
+	{
+		return file_exists( base_path("public/package/{$this->vendor}/{$this->module}/" ) ) ? false : true;
 	}
 
 	/**
 	 * [dumpAutoload description]
 	 * @return [type] [description]
 	 */
-	private function dumpAutoload() {
+	private function dumpAutoload()
+	{
 		$localComposerFile = base_path('composer.phar');
 		if( file_exists( $localComposerFile ) ) {
 			echo shell_exec("php {$localComposerFile} dump-autoload");
@@ -120,7 +134,8 @@ class Command extends IlluminateCommand {
 	 * [laravelRename description]
 	 * @return [type] [description]
 	 */
-	private function laravelRename() {
+	private function laravelRename()
+	{
 		$this->call( "app:name",  ["name" => "{$this->camelCasedVendor}\\{$this->camelCasedModule}"]);
 	}
 
@@ -128,10 +143,12 @@ class Command extends IlluminateCommand {
 	 * [moduleRename description]
 	 * @return [type] [description]
 	 */
-	private function moduleRename() {
+	private function moduleRename()
+	{
 		$this->renamePublicFolders();
 		$this->renameDatabaseFolders();
 		$this->updateRegistrationFile();
+		$this->updateReferences();
 		$this->updateGulpFile();
 		$this->updateComposerFile();
 		$this->updatePackagesFile();
@@ -141,27 +158,65 @@ class Command extends IlluminateCommand {
 	 * [renameDatabaseFolders description]
 	 * @return [type] [description]
 	 */
-	private function renameDatabaseFolders() {
-		rename( base_path( "database/migrations/vendor/{$this->currentVendor}/{$this->currentModule}" ), base_path( "database/migrations/vendor/{$this->currentVendor}/{$this->module}" ) );
-		rename( base_path( "database/migrations/vendor/{$this->currentVendor}" ), base_path( "database/migrations/vendor/{$this->vendor}" ) );
-		rename( base_path( "database/seeds/vendor/{$this->currentVendor}/{$this->currentModule}" ), base_path( "database/seeds/vendor/{$this->currentVendor}/{$this->module}" ) );
-		rename( base_path( "database/seeds/vendor/{$this->currentVendor}" ), base_path( "database/seeds/vendor/{$this->vendor}" ) );
+	private function renameDatabaseFolders()
+	{
+		$this->renameMigrationFolders();
+		$this->renameSeedsFolders();
+	}
+
+	/**
+	 * [updateReferences description]
+	 * @return [type] [description]
+	 */
+	private function updateReferences()
+	{
+		// Application files
+		$files = $this->findAllFiles( app_path() );
+		foreach( $files as $file ) {
+			$contents = preg_replace( "/([\/']){$this->currentVendor}([\/\.]){$this->currentModule}([\/']|(?:::))/", "$1{$this->vendor}$2{$this->module}$3", file_get_contents( $file ) );
+			file_put_contents( $file, $contents );
+		}
+		// Resource views
+		$files = $this->findAllFiles( base_path('resources/views') );
+		foreach( $files as $file ) {
+			$contents = preg_replace( "/([\/']){$this->currentVendor}([\/\.]){$this->currentModule}([\/']|(?:::))/", "$1{$this->vendor}$2{$this->module}$3", file_get_contents( $file ) );
+			file_put_contents( $file, $contents );
+		}
+	}
+
+	/**
+	 * [renameMigrationFolders description]
+	 * @return [type] [description]
+	 */
+	private function renameMigrationFolders()
+	{
+		$this->copyOrRename( 'database/migrations/vendor' );
+	}
+
+	/**
+	 * [renameSeedsFolders description]
+	 * @return [type] [description]
+	 */
+	private function renameSeedsFolders()
+	{
+		$this->copyOrRename( 'database/seeds/vendor' );
 	}
 
 	/**
 	 * [renamePublicFolders description]
 	 * @return [type] [description]
 	 */
-	private function renamePublicFolders() {
-		rename( public_path("package/{$this->currentVendor}/{$this->currentModule}"), public_path("package/{$this->currentVendor}/{$this->module}") );
-		rename( public_path("package/{$this->currentVendor}"), public_path("package/{$this->vendor}") );
+	private function renamePublicFolders()
+	{
+		$this->copyOrRename( 'public/package' );
 	}
 
 	/**
 	 * [updatePackagesFile description]
 	 * @return [type] [description]
 	 */
-	private function updatePackagesFile() {
+	private function updatePackagesFile()
+	{
 		$file = base_path('config/packages.json');
 		if( ! file_exists( $file ) ) return;
 		$contents = file_get_contents( $file );
@@ -173,7 +228,8 @@ class Command extends IlluminateCommand {
 	 * [updateComposerFile description]
 	 * @return [type] [description]
 	 */
-	private function updateComposerFile() {
+	private function updateComposerFile()
+	{
 		$file = base_path('composer.json');
 		if( ! file_exists( $file ) ) return;
 		$contents = file_get_contents( $file );
@@ -186,7 +242,8 @@ class Command extends IlluminateCommand {
 	 * [updateRegistrationFile description]
 	 * @return [type] [description]
 	 */
-	private function updateRegistrationFile() {
+	private function updateRegistrationFile()
+	{
 		$file = base_path('registration.json');
 		if( ! file_exists( $file ) ) return;
 		$contents = file_get_contents( $file );
@@ -198,12 +255,102 @@ class Command extends IlluminateCommand {
 	 * [updateGulpFile description]
 	 * @return [type] [description]
 	 */
-	private function updateGulpFile() {
+	private function updateGulpFile()
+	{
 		$file = base_path('gulpfile.js');
 		if( ! file_exists( $file ) ) return;
 		$contents = file_get_contents( $file );
-		$newContents = str_replace( "/{$this->currentVendor}/{$this->currentModule}/", "/{$this->vendor}/{$this->module}/", $contents );
+		$newContents = str_replace( "public/package/{$this->currentVendor}/{$this->currentModule}/", "public/package/{$this->vendor}/{$this->module}/", $contents );
 		file_put_contents( $file, $newContents );
+	}
+
+	/**
+	 * [deleteDirectory description]
+	 * @param  [type] $dir [description]
+	 * @return [type]      [description]
+	 */
+	private function deleteDirectory($dir)
+	{
+	    if ( ! file_exists( $dir ) ) return true;
+	    if ( ! is_dir( $dir ) ) return unlink( $dir );
+	    foreach ( scandir( $dir ) as $item ) {
+	        if ( $item == '.' || $item == '..' ) continue;
+	        if ( ! $this->deleteDirectory($dir . DIRECTORY_SEPARATOR . $item ) ) return false;
+	    }
+	    return rmdir( $dir );
+	}
+
+	/**
+	 * [copyOrRename description]
+	 * @param  [type] $pathPrefix [description]
+	 * @return [type]             [description]
+	 */
+	public function copyOrRename( $pathPrefix )
+	{
+		if( $this->currentVendor !== $this->vendor ) {
+			$newDir = base_path( "{$pathPrefix}/{$this->vendor}" );
+			if( ! file_exists( $newDir ) ) mkdir( $newDir, 0755 );
+			$this->copy(
+				base_path( "{$pathPrefix}/{$this->currentVendor}/{$this->currentModule}" ),
+				base_path("{$pathPrefix}/{$this->vendor}/{$this->module}")
+			);
+		} else {
+			rename( base_path( "{$pathPrefix}/{$this->currentVendor}/{$this->currentModule}" ), base_path("{$pathPrefix}/{$this->currentVendor}/{$this->module}" ) );
+			rename( base_path( "{$pathPrefix}/{$this->currentVendor}"), base_path("{$pathPrefix}/{$this->vendor}" ) );
+		}
+    	$this->deleteDirectory( base_path( "{$pathPrefix}/{$this->currentVendor}/{$this->currentModule}" ) );
+    	if( !(new \FilesystemIterator( base_path( "{$pathPrefix}/{$this->currentVendor}" ) ) )->valid() ) {
+    		rmdir( base_path( "{$pathPrefix}/{$this->currentVendor}" ) );
+    	}
+	}
+
+	/**
+	 * [findAllFiles description]
+	 * @param  [type] $dir [description]
+	 * @return [type]      [description]
+	 */
+	private function findAllFiles( $dir )
+	{
+		$dir = rtrim( $dir, '/' );
+	    $root = scandir( $dir );
+	    foreach( $root as $value ) {
+	        if( $value === '.' || $value === '..' ) continue;
+	        if( is_file( "{$dir}/{$value}" ) ) {
+	        	$result[] = "{$dir}/{$value}";
+	        	continue;
+	        }
+	        foreach( $this->findAllFiles( "{$dir}/{$value}" ) as $value ) {
+	            $result[] = $value;
+	        }
+	    }
+	    return $result;
+	}
+
+	/**
+	 * [copy description]
+	 * @param  [type] $source      [description]
+	 * @param  [type] $destination [description]
+	 * @return [type]              [description]
+	 */
+	private function copy( $source, $destination )
+	{
+		$delete = [];
+		$source = rtrim( $source, '/' ) . '/';
+		$destination = rtrim( $destination, '/' ) . '/';
+	    $files = $this->findAllFiles( $source );
+	    foreach ( $files as $file ) {
+	        if ( in_array( $file, array( ".", ".." ) ) ) continue;
+	        $file = str_replace( $source, '', $file );
+	        if( ! file_exists( $destination . dirname( $file ) ) ) {
+				mkdir( $destination . dirname( $file ), 0755, true);
+			}
+	        if ( @copy( $source . $file, $destination . $file ) ) {
+	            $delete[] = $source . $file;
+	        }
+	    }
+	    foreach ( $delete as $file ) {
+	        unlink( $file );
+	    }
 	}
 
 }
