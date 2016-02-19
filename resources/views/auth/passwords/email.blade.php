@@ -11,16 +11,16 @@
         <div id="screen-loader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #DADADA; z-index: 9999;"></div>
         <div class="ui middle aligned center aligned grid">
             <div class="column">
-                <h2 class="ui teal image header">
+                <h2 class="ui teal header">
                     <div class="content">
-                        Reset Password
+                        <div class="ui horizontal divider"><i class="unlock alternate icon"></i> Reset Password</div>
                     </div>
                 </h2>
-                <form class="ui large form" method="post" action="{{ route('post.sendEmail') }}">
+                <form class="ui small form" method="post" action="{{ route('post.sendEmail') }}">
                     {!! csrf_field() !!}
                     @if ( ! $errors->isEmpty() )
                         <div class="ui error small message">
-                            <div class="header">There was some errors with your submission</div>
+                            <div class="ui left aligned header">There was some errors with your submission</div>
                             <ul class="list">
                                 @foreach ( $errors->all() as $error )
                                     <li>{{ $error }}</li>
@@ -40,11 +40,11 @@
                                 <input type="text" name="email" value="{{ old('email') }}" placeholder="E-mail address">
                             </div>
                         </div>
-                        <button class="ui fluid large teal submit button">Send Password Reset Link</button>
+                        <button class="ui fluid small blue submit button">Send Password Reset Link</button>
                     </div>
                 </form>
 
-                <div class="ui message">
+                <div class="ui small message">
                     <a href="{{ route('get.login') }}">Login</a> | <a href="{{ route('get.register') }}">Sign Up</a>
                 </div>
             </div>

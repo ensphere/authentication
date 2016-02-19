@@ -72,7 +72,7 @@ class Password extends Contract implements Blueprint {
 	 */
 	protected function getResetSuccessResponse( $response )
     {
-        return redirect( $this->redirectTo )->with( 'status', trans( $response ) );
+        return redirect( route( 'get.login' ) )->with( 'status', trans( $response ) );
     }
 
 	/**

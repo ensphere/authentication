@@ -13,20 +13,24 @@
 			<div class="column">
 				<h2 class="ui teal header">
 					<div class="content">
-						Log-in to your account
+						<div class="ui horizontal divider"><i class="lock icon"></i> Log-in to your account</div>
 					</div>
-					<div class="ui divider"></div>
 				</h2>
 				<form class="ui small form" method="post" action="{{ route('post.login') }}">
 					{!! csrf_field() !!}
 					@if ( ! $errors->isEmpty() )
 						<div class="ui error small message">
-							<div class="header">There was some errors with your submission</div>
+							<div class="ui left aligned header">There was some errors with your submission</div>
 							<ul class="list">
 								@foreach ( $errors->all() as $error )
 									<li>{{ $error }}</li>
 								@endforeach
 							</ul>
+						</div>
+					@endif
+					@if( Session::has( 'status' ) )
+						<div class="ui success small message">
+							{!! Session::get( 'status' ) !!}
 						</div>
 					@endif
 					<div class="ui stacked segment">
@@ -42,11 +46,11 @@
 								<input type="password" name="password" placeholder="Password">
 							</div>
 						</div>
-						<button class="ui fluid small teal submit button">Login</button>
+						<button class="ui fluid small blue submit button">Login</button>
 					</div>
 				</form>
 
-				<div class="ui message">
+				<div class="ui small message">
 					<a href="{{ route('get.reset') }}">Forgotten Password?</a> | <a href="{{ route('get.register') }}">Sign Up</a>
 				</div>
 			</div>

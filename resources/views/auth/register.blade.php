@@ -10,21 +10,17 @@
     <body class="authentication register">
         <div id="screen-loader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #DADADA; z-index: 9999;"></div>
         <div class="ui middle aligned center aligned grid">
-            <div class="column left aligned">
-                <div class="ui aligned center aligned grid">
-                    <div class="column center aligned">
-                        <h2 class="ui teal center aligned header">
-                            <div class="content">
-                                Register for an account
-                            </div>
-                        </h2>
+            <div class="column">
+                <h2 class="ui teal header">
+                    <div class="content">
+                        <div class="ui horizontal divider"><i class="user icon"></i> Register For An Account</div>
                     </div>
-                </div>
-                <form method="post" action="{{ route('post.register') }}">
+                </h2>
+                <form class="ui small form" method="post" action="{{ route('post.register') }}">
                     {!! csrf_field() !!}
                     @if ( ! $errors->isEmpty() )
                         <div class="ui error small message">
-                            <div class="header">There was some errors with your submission</div>
+                            <div class="ui left aligned header">There was some errors with your submission</div>
                             <ul class="list">
                                 @foreach ( $errors->all() as $error )
                                     <li>{{ $error }}</li>
@@ -32,34 +28,36 @@
                             </ul>
                         </div>
                     @endif
-                    <div class="ui form segment">
-                        <div class="required field {{ $errors->has('name') ? 'error' : '' }}">
-                            <label class="ui left item">Name</label>
-                            <input type="text" name="name" value="{{ old('name') }}">
-                        </div>
-                        <div class="required field {{ $errors->has('email') ? 'error' : '' }}">
-                            <label>E-Mail Address</label>
-                            <input type="text" name="email" value="{{ old('email') }}">
-                        </div>
-                        <div class="two fields">
-                            <div class="required field {{ $errors->has('password') ? 'error' : '' }}">
-                                <label>Password</label>
-                                <input type="password" name="password">
-                            </div>
-                            <div class="required field {{ $errors->has('password_confirmation') ? 'error' : '' }}">
-                                <label>Confirm Password</label>
-                                <input type="password" name="password_confirmation">
+                    <div class="ui stacked segment">
+                        <div class="field">
+                            <div class="ui left icon input {{ $errors->has('name') ? 'error' : '' }}">
+                                <i class="user icon"></i>
+                                <input type="text" name="name" value="{{ old('name') }}" placeholder="Full Name">
                             </div>
                         </div>
-                        <button class="ui large fluid teal submit button">Register for an account</button>
+                        <div class="field">
+                            <div class="ui left icon input {{ $errors->has('email') ? 'error' : '' }}">
+                                <i class="mail icon"></i>
+                                <input type="text" name="email" value="{{ old('email') }}" placeholder="Email Address">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input {{ $errors->has('password') ? 'error' : '' }}">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password" value="{{ old('password') }}" placeholder="Password">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="ui left icon input {{ $errors->has('password_confirmation') ? 'error' : '' }}">
+                                <i class="lock icon"></i>
+                                <input type="password" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirm Password">
+                            </div>
+                        </div>
+                        <button class="ui small fluid blue submit button">Register for an account</button>
                     </div>
                 </form>
-                <div class="ui aligned center aligned grid">
-                    <div class="column center aligned">
-                        <div class="ui message">
-                            <a href="{{ route('get.login') }}">Already got an account?</a></a>
-                        </div>
-                    </div>
+                <div class="ui small message">
+                    <a href="{{ route('get.login') }}">Already got an account?</a></a>
                 </div>
             </div>
         </div>
