@@ -30,6 +30,6 @@
 
 	},
 	"contracts" : {
-
+		"Ensphere\\Authentication\\Contracts\\Authentication" : "Ensphere\\Authentication\\Contracts\\Blueprints\\Authentication"
 	}
 }
