@@ -69,6 +69,23 @@ class Authentication extends Contract implements Blueprint {
 		return $this->view( 'auth.signedup' );
 	}
 
+    /**
+     * [handleUserWasAuthenticated description]
+     * @param  Request $request   [description]
+     * @param  [type]  $throttles [description]
+     * @return [type]             [description]
+     */
+    protected function handleUserWasAuthenticated( Request $request, $throttles, $guard )
+    {
+        if ($throttles) {
+            $this->clearLoginAttempts( $request );
+        }
+        if ( method_exists( $this, 'authenticated' ) ) {
+            return $this->authenticated( $request, Auth::guard( $guard )->user() );
+        }
+        return redirect()->intended( $this->redirectTo );
+    }
+
 	/**
 	 * [register description]
 	 * @param  Request $request [description]
@@ -102,7 +119,7 @@ class Authentication extends Contract implements Blueprint {
         }
         $credentials = $this->getCredentials( $request );
         if ( Auth::guard( $guard )->attempt( array( 'active' => 1 ) + $credentials, $request->has( 'remember' ) ) ) {
-            return $this->handleUserWasAuthenticated( $request, $throttles );
+            return $this->handleUserWasAuthenticated( $request, $throttles, $guard );
         }
 
         // check to see if they can login without the active flag

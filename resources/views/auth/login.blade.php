@@ -11,12 +11,13 @@
 		<div id="screen-loader" style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #DADADA; z-index: 9999;"></div>
 		<div class="ui middle aligned center aligned grid">
 			<div class="column">
-				<h2 class="ui teal image header">
+				<h2 class="ui teal header">
 					<div class="content">
 						Log-in to your account
 					</div>
+					<div class="ui divider"></div>
 				</h2>
-				<form class="ui large form" method="post" action="{{ route('post.login') }}">
+				<form class="ui small form" method="post" action="{{ route('post.login') }}">
 					{!! csrf_field() !!}
 					@if ( ! $errors->isEmpty() )
 						<div class="ui error small message">
@@ -41,7 +42,7 @@
 								<input type="password" name="password" placeholder="Password">
 							</div>
 						</div>
-						<button class="ui fluid large teal submit button">Login</button>
+						<button class="ui fluid small teal submit button">Login</button>
 					</div>
 				</form>
 
