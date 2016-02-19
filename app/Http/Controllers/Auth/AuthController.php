@@ -42,8 +42,6 @@ class AuthController extends BaseController
     public function __construct( Authentication $blueprint )
     {
         $this->repository = $blueprint;
-        $this->redirectTo = route('get.dashboard');
-        $this->redirectAfterLogout = route('get.login');
         $this->middleware( 'guest', ['except' => 'logout' ]);
     }
 
@@ -92,6 +90,15 @@ class AuthController extends BaseController
     public function signedUp()
     {
         return $this->repository->signedUp();
+    }
+
+    /**
+     * [logout description]
+     * @return [type] [description]
+     */
+    public function logout()
+    {
+        return $this->repository->logout( $this->getGuard() );
     }
 
 }

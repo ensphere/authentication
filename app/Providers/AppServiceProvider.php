@@ -32,13 +32,16 @@ class AppServiceProvider extends ServiceProvider {
 	}
 
 	/**
-	 * THESE ARE APPLICATION CONTRACTS.
 	 * REGISTER MODULE CONTRACTS IN THE REGISTRATION FILE SO THEY CAN BE EXTENDED PER APPLICATION
 	 */
 	public function register()
 	{
-		$this->app->bind( \Libs\Providers\Service::contracts([
+		$contracts = \Libs\Providers\Service::contracts([
+			// THESE ARE APPLICATION CONTRACTS.
 
-		]));
+		]);
+		foreach( $contracts as $blueprint => $contract ) {
+			$this->app->bind( $blueprint, $contract );
+		}
 	}
 }

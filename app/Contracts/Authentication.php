@@ -27,7 +27,20 @@ class Authentication extends Contract implements Blueprint {
 	public function __construct( User $model )
 	{
 		$this->model = $model;
+		$this->redirectTo = route( 'get.dashboard' );
+        $this->redirectAfterLogout = route( 'get.login' );
 	}
+
+    /**
+     * [logout description]
+     * @param  [type] $guard [description]
+     * @return [type]        [description]
+     */
+    public function logout( $guard )
+    {
+        Auth::guard( $guard )->logout();
+        return redirect( $this->redirectAfterLogout );
+    }
 
 	/**
 	 * [showLoginForm description]
@@ -143,6 +156,10 @@ class Authentication extends Contract implements Blueprint {
         );
     }
 
+    /**
+     * Used to define what column in the database to use e.g. email or username
+     * @return [type] [description]
+     */
     public function loginUsername()
     {
     	return 'email';

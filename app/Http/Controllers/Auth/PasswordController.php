@@ -1,8 +1,6 @@
-<?php
+<?php namespace Ensphere\Authentication\Http\Controllers\Auth;
 
-namespace Ensphere\Authentication\Http\Controllers\Auth;
-
-use Ensphere\Authentication\Http\Controllers\Controller;
+use Ensphere\Authentication\Contracts\Blueprints\Password;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Ensphere\Authentication\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
@@ -25,9 +23,9 @@ class PasswordController extends BaseController
     /**
      * [__construct description]
      */
-    public function __construct()
+    public function __construct( Password $blueprint )
     {
-        $this->redirectTo = route('get.dashboard');
+        $this->repository = $blueprint;
         $this->middleware( 'guest' );
     }
 
@@ -37,16 +35,16 @@ class PasswordController extends BaseController
      */
     public function getEmail()
     {
-        return $this->showLinkRequestForm();
+        return $this->repository->getEmail();
     }
 
     /**
-     * [showLinkRequestForm description]
+     * [reset description]
      * @return [type] [description]
      */
-    public function showLinkRequestForm()
+    public function reset( Request $request )
     {
-        return view( 'ensphere.auth::auth.passwords.email' );
+        return $this->repository->reset( $request, $this->getBroker(), $this->getGuard() );
     }
 
     /**
@@ -57,15 +55,7 @@ class PasswordController extends BaseController
      */
     public function showResetForm( Request $request, $token = null )
     {
-        if ( is_null( $token ) ) {
-            return $this->getEmail();
-        } else {
-            $email = $request->input( 'email' );
-            return view( 'ensphere.auth::auth.passwords.reset', array(
-                'token' => $token,
-                'email' => $email
-            ));
-        }
+        return $this->repository->showResetForm( $request, $token );
     }
 
 }
