@@ -36,7 +36,7 @@
                     <div class="ui stacked segment">
                         <div class="field">
                             <div class="ui left icon input {{ $errors->has('email') ? 'error' : '' }}">
-                                <i class="user icon"></i>
+                                <i class="mail icon"></i>
                                 <input type="text" name="email" value="{{ old('email') }}" placeholder="E-mail address">
                             </div>
                         </div>
