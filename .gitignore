@@ -5,3 +5,5 @@
 config/packages.json
 composer.lock
 .env
+.idea/*
+/docs/*

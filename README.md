@@ -1,34 +1,23 @@
-## ensphere - an alternative Laravel base for creating modular based applications
-This was built to bridge the gap of standalone module development without manual configuration or duplicate assets.
+# Authentication
 
-1. Add the following to your ~/.bash_profile
+### The MIT License (MIT)
 
-```
-function _ensphere {
-	composer create-project ensphere/ensphere --repository-url=http://pmcom.packagist.wden.co.uk/ --stability=dev "$1"
-}
-alias ensphere=_ensphere
-```
+Copyright (c) 2016 ensphere
 
-You can then create a new module by entering
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-```ensphere modelName```
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-And to rename the module (this does alot more than Laravel's)
-
-```artisan ensphere:rename```
-
-If you are creating a module and not the start of a base application, do not use the app configuration file to register service providers, aliases or middleware, define these in the registration.json file.
-
-When requiring assets (js/css), you must use bower.
-
-If the install fails due to node install hanging up, run the following commands in order:
-
-```npm update```
-```bower install```
-```php artisan ensphere:register```
-```php artisan vendor:publish --force```
-```php artisan ensphere:assets```
-```gulp```
-
-run ```artisan serve```
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
