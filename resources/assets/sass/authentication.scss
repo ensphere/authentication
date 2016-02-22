@@ -34,3 +34,58 @@
 	background: white;
 	z-index: 9999;
 }
+
+// dashboard
+
+.top-bar {
+	height: 50px;
+	padding: 5px;
+	position: fixed;
+	top:0;
+	left: 0;
+	right: 0;
+	#user-block {
+		max-height: 100%;
+	}
+	img {
+		max-height: 50px;
+		margin: 5px;
+	}
+	> .menu {
+		background: transparent;
+	}
+}
+
+body > .wrapper {
+	height: 100%;
+	> .side-bar {
+		position: fixed;
+		left: 0;
+		top: 50px;
+		bottom: 0;
+		width: 280px;
+		//background: #22211f;
+		padding: 10px;
+		z-index: 2;
+	}
+	> .container {
+		position: fixed;
+		right: 0;
+		left: 0;
+		top: 50px;
+		bottom: 0;
+		margin-left: 280px;
+		overflow: auto;
+		background: white;
+		padding:10px;
+		z-index: 1;
+		> .segment {
+			min-height: 100%;
+			> .ui.header {
+				display: table-row;
+			}
+		}
+
+	}
+}
+

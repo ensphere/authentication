@@ -22,4 +22,45 @@
   background: white;
   z-index: 9999; }
 
+.top-bar {
+  height: 50px;
+  padding: 5px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0; }
+  .top-bar #user-block {
+    max-height: 100%; }
+  .top-bar img {
+    max-height: 50px;
+    margin: 5px; }
+  .top-bar > .menu {
+    background: transparent; }
+
+body > .wrapper {
+  height: 100%; }
+  body > .wrapper > .side-bar {
+    position: fixed;
+    left: 0;
+    top: 50px;
+    bottom: 0;
+    width: 280px;
+    padding: 10px;
+    z-index: 2; }
+  body > .wrapper > .container {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 50px;
+    bottom: 0;
+    margin-left: 280px;
+    overflow: auto;
+    background: white;
+    padding: 10px;
+    z-index: 1; }
+    body > .wrapper > .container > .segment {
+      min-height: 100%; }
+      body > .wrapper > .container > .segment > .ui.header {
+        display: table-row; }
+
 /*# sourceMappingURL=authentication.css.map */

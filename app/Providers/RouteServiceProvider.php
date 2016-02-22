@@ -2,6 +2,7 @@
 
 use Illuminate\Routing\Router;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use LukeSnowden\Menu\Menu;
 
 class RouteServiceProvider extends ServiceProvider {
 
@@ -39,6 +40,13 @@ class RouteServiceProvider extends ServiceProvider {
 		{
 			require __DIR__ . '/../Http/routes.php';
 		});
+		Menu::addItem([
+			'text' => 'Dashboard',
+			'URL' => 'route:get.dashboard',
+			'reference' => 'dashboard'
+		])
+		->toMenu( 'main' );
+		Menu::setMenuType( 'semantic-ui-vertical', 'main', 'LukeSnowden\Menu\Styles' );
 	}
 
 }
