@@ -25,7 +25,8 @@
 		"Ensphere\\Authentication\\Providers\\AppServiceProvider",
 		"Ensphere\\Authentication\\Providers\\ConfigServiceProvider",
 		"Ensphere\\Authentication\\Providers\\EventServiceProvider",
-		"Ensphere\\Authentication\\Providers\\RouteServiceProvider"
+		"Ensphere\\Authentication\\Providers\\RouteServiceProvider",
+		"Ensphere\\Container\\Providers\\ServiceProvider"
 	],
 	"aliases" : {
 
