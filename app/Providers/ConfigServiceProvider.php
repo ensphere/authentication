@@ -40,7 +40,7 @@ class ConfigServiceProvider extends ServiceProvider {
 			    'passwords' => [
 			        'users' => [
 			            'provider' => 'users',
-			            'email' => 'auth.emails.password',
+			            'email' => 'ensphere.auth::auth.emails.password',
 			            'table' => 'password_resets',
 			            'expire' => 60,
 			        ],
