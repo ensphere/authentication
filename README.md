@@ -1,4 +1,4 @@
-# Authentication
+# Ensphere Authentication
 
 ### The MIT License (MIT)
 
