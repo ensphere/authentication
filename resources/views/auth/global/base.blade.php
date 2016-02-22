@@ -10,10 +10,24 @@
 			</div>
 		</h2>
 		{!! LukeSnowden\Menu\Menu::render( 'main', [ 'class' => 'ui vertical fluid blue menu' ], 'div' ) !!}
+		{!! $dashboardLeft !!}
 	</div>
 	<div class="container">
 		<div class="ui segment">
-			{!! $content !!}
+			@if( ! $errors->isEmpty() )
+				<div class="ui error message">
+					<div class="header">There was some errors with your submission</div>
+					<ul class="list">
+						@foreach( $errors->all() as $error )
+							<li>{!! $error !!}</li>
+						@endforeach
+					</ul>
+				</div>
+			@endif
+			<form method="post">
+				{!! csrf_field() !!}
+				{!! $content !!}
+			</form>
 		</div>
 	</div>
 </div>

@@ -29,5 +29,6 @@ $this->group([ 'middleware' => 'web', 'prefix' => 'admin' ], function () {
 	$this->post('password/email', 			[ 'as' => 'post.sendEmail', 'uses' => 'Auth\PasswordController@sendResetLinkEmail'] );
 	$this->post('password/reset', 			[ 'as' => 'post.reset', 'uses' => 'Auth\PasswordController@reset'] );
     $this->get('dashboard', 				[ 'as' => 'get.dashboard', 'uses' => 'DashboardController@index'] );
+    $this->post('dashboard', 				[ 'as' => 'post.dashboard', 'uses' => 'DashboardController@postToIndex'] );
 
 });

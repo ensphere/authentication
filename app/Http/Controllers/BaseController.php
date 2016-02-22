@@ -85,5 +85,16 @@ class BaseController extends Controller {
 		}
 	}
 
+	/**
+	 * [share description]
+	 * @param  [type] $name [description]
+	 * @param  [type] $data [description]
+	 * @return [type]       [description]
+	 */
+	protected function share( $name, $data )
+	{
+		view()->share( $name, $data );
+	}
+
 
 }

@@ -153,6 +153,7 @@ return [
 		Ensphere\Authentication\Providers\AppServiceProvider::class,
         Ensphere\Authentication\Providers\EventServiceProvider::class,
         Ensphere\Authentication\Providers\RouteServiceProvider::class,
+        Ensphere\Container\Providers\ServiceProvider::class
 
 	]),
 
@@ -199,6 +200,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'Container' => Ensphere\Container\Facades\Container::class,
 
 	]),
 

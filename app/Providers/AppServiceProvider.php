@@ -1,6 +1,7 @@
 <?php namespace Ensphere\Authentication\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Application;
 use Libs\Helper;
 
 class AppServiceProvider extends ServiceProvider {
@@ -19,7 +20,7 @@ class AppServiceProvider extends ServiceProvider {
 	 *
 	 * @return void
 	 */
-	public function boot()
+	public function boot( Application $app )
 	{
 		$this->loadViewsFrom( __DIR__ . '/../../resources/views', 'ensphere.auth' );
 		if( self::isModule() ) {
@@ -29,6 +30,21 @@ class AppServiceProvider extends ServiceProvider {
 				__DIR__ . '/../../resources/database/migrations/' => database_path( 'migrations/vendor/ensphere/authentication/' )
 			], __DIR__ ));
 		}
+		$this->registerContainers( $app['ensphere.container'] );
+	}
+
+	/**
+	 * Register Areas to bind functionality or views to.
+	 * @param  Application $app [description]
+	 * @return [type]           [description]
+	 */
+	public function registerContainers( $container )
+	{
+		$container->register( 'dashboard-top-bar' )
+			->register([ \Ensphere\Authentication\Contents\Buttons::class ]);
+		$container->register( 'dashboard-right-left' );
+		$container->register( 'dashboard-left' );
+		$container->register( 'dashboard-right-right' );
 	}
 
 	/**

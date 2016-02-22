@@ -1,8 +1,8 @@
-
-<h1 class="ui header">
-	<i class="area chart icon icon"></i>
-	<div class="content">
-		Dashboard
-		<div class="sub header">Application overview</div>
+<div class="ui two column grid fluid">
+	<div class="column">
+		{!! $dashboardRightLeft !!}
 	</div>
-</h1>
+	<div class="column">
+		{!! $dashboardRightRight !!}
+	</div>
+</div>
