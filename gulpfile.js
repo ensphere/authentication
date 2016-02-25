@@ -13,12 +13,8 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix
-    // Module Based Assets
-    .sass("authentication.scss", "public/package/ensphere/authentication/css")
-    .copy("resources/assets/images/", "public/package/ensphere/authentication/images/")
-	.copy("resources/assets/js/", "public/package/ensphere/authentication/js/")
+    .sass( ["authentication.scss"], "public/package/ensphere/authentication/css")
+    .scripts( ["authentication.js"], "public/package/ensphere/authentication/js/")
+    .copy("resources/assets/images/", "public/package/ensphere/authentication/images/");
 
-	// Dependencies
-	.copy("bower_components/semantic-ui", "public/vendor/semantic-ui")
-	.copy("bower_components/jquery", "public/vendor/jquery");
 });

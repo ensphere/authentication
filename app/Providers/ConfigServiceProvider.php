@@ -1,6 +1,7 @@
 <?php namespace Ensphere\Authentication\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Ensphere\Authentication\Models\User;
 
 class ConfigServiceProvider extends ServiceProvider {
 
@@ -20,7 +21,7 @@ class ConfigServiceProvider extends ServiceProvider {
 				'providers' => [
 		        	'users' => [
 		            	'driver' => 'eloquent',
-		            	'model' => \Ensphere\Authentication\Models\User::class,
+		            	'model' => User::class,
 		        	]
 		        ],
 		        'defaults' => [

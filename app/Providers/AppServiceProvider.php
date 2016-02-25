@@ -2,7 +2,9 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\Application;
-use Libs\Helper;
+use EnsphereCore\Libs\Config\Publish;
+use EnsphereCore\Libs\Providers\Service;
+use Ensphere\Authentication\Contents\Buttons;
 
 class AppServiceProvider extends ServiceProvider {
 
@@ -24,7 +26,7 @@ class AppServiceProvider extends ServiceProvider {
 	{
 		$this->loadViewsFrom( __DIR__ . '/../../resources/views', 'ensphere.auth' );
 		if( self::isModule() ) {
-			$this->publishes( \Libs\Config\Publish::bower([
+			$this->publishes( Publish::bower([
 				__DIR__ . '/../../public/package/ensphere/authentication/' => base_path( 'public/package/ensphere/authentication/' ),
 				__DIR__ . '/../../config/auth.php' => config_path( 'auth.php' ),
 				__DIR__ . '/../../resources/database/migrations/' => database_path( 'migrations/vendor/ensphere/authentication/' )
@@ -41,7 +43,7 @@ class AppServiceProvider extends ServiceProvider {
 	public function registerContainers( $container )
 	{
 		$container->register( 'dashboard-top-bar' )
-			->register([ \Ensphere\Authentication\Contents\Buttons::class ]);
+			->register([ Buttons::class ]);
 		$container->register( 'dashboard-right-left' );
 		$container->register( 'dashboard-left' );
 		$container->register( 'dashboard-right-right' );
@@ -53,7 +55,7 @@ class AppServiceProvider extends ServiceProvider {
 	public function register()
 	{
 		if( ! self::isModule() ) {
-			$contracts = \Libs\Providers\Service::contracts([
+			$contracts = Service::contracts([
 				// THESE ARE APPLICATION CONTRACTS.
 
 			]);
