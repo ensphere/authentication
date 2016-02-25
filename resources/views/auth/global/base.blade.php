@@ -10,7 +10,7 @@
 			</div>
 		</h2>
 		{!! LukeSnowden\Menu\Menu::render( 'main', [ 'class' => 'ui vertical fluid blue menu' ], 'div' ) !!}
-		{!! $dashboardLeft !!}
+		{!! $dashboardLeft or '' !!}
 	</div>
 	<div class="container">
 		<div class="ui segment">

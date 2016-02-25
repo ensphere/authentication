@@ -1,5 +1,5 @@
 	<div class="top-bar">
 		<div class="ui menu">
-			{!! $dashboardTopbar !!}
+			{!! $dashboardTopbar or '' !!}
 		</div>
 	</div>
